@@ -144,7 +144,7 @@ function Navbar(){
                   <span className="text-xs">Alerts</span>
                 </button>
                 <button className="flex flex-col items-center p-3 text-gray-600 hover:text-blue-600 transition-colors">
-                  <User className="w-6 h-6 mb-1" />
+                  <a href='/Dashboard'><User className="w-6 h-6 mb-1" /></a>
                   <span className="text-xs">Profile</span>
                 </button>
               </div>
