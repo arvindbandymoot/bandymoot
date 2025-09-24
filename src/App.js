@@ -10,10 +10,12 @@ import CompanyGallery from './pages/Gallery';
 import SimpleCareers from './pages/Career';
 import Signup from './components/core/Signup';
 import Login from './components/core/Login';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-   <Router>
+  //  <Router>
+  <div>
       <Navbar />
         <Routes>
           <Route path="/" element={<Homepage/>} />
@@ -23,9 +25,11 @@ function App() {
           <Route path="/Career" element={<SimpleCareers/>} />
           <Route path="/Signup" element={<Signup/>} />
           <Route path="/Login" element={<Login/>} />
+          <Route path="/Dashboard" element={<Dashboard/>} />
         </Routes>
       <Footer/>
-    </Router>
+      </div>
+    // </Router>
   );
 }
 

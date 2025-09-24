@@ -21,7 +21,7 @@ function Navbar(){
             {/* Desktop Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <span className="text-2xl font-bold text-blue-600">Bandymoot</span>
+                <span className="text-2xl font-bold text-blue-600">Bandy&moot</span>
               </div>
             </div>
 
@@ -47,7 +47,7 @@ function Navbar(){
                 <Bell className="w-5 h-5" />
               </button>
               <button className="text-gray-600 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition-colors">
-                <User className="w-5 h-5" />
+                <a href='/Dashboard'><User className="w-5 h-5" /></a>
               </button>
                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
                 <a href='/Login'>Log In</a>
@@ -65,7 +65,7 @@ function Navbar(){
         <div className="flex justify-between items-center h-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
           {/* Mobile Logo */}
           <div className="text-xl font-bold text-white">
-            Bandymoot
+            Bandy&moot
           </div>
 
           {/* Mobile Menu Button */}

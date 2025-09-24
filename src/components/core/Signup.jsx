@@ -1,6 +1,22 @@
 import React from "react";
+import { useState } from "react";
+import { useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const Signup = () => {
+  // State to hold form data
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  // Handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Data:", form); // Here you can dispatch Redux signup action
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
@@ -10,7 +26,7 @@ const Signup = () => {
         </h2>
 
         {/* Form */}
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {/* Full Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -19,6 +35,8 @@ const Signup = () => {
             <input
               type="text"
               placeholder="John Doe"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
@@ -31,6 +49,8 @@ const Signup = () => {
             <input
               type="email"
               placeholder="you@example.com"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
@@ -43,6 +63,8 @@ const Signup = () => {
             <input
               type="password"
               placeholder="••••••••"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
           </div>
