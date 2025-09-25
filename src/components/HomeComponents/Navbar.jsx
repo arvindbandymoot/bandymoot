@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown, Search, User, Bell } from 'lucide-react';
 
-function Navbar(){
+function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -17,11 +17,22 @@ function Navbar(){
       {/* DESKTOP NAVBAR - Horizontal Layout */}
       <div className="hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-[84px]">
             {/* Desktop Logo */}
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <span className="text-2xl font-bold text-blue-600">Bandy&moot</span>
+                {/* Company Logo */}
+                <div class="flex items-center justify-center">
+                  <div class="h-30 w-50 overflow-hidden">
+                    <img
+                      src="https://lh3.googleusercontent.com/sitesv/AICyYdbpbifTvfn6hvSMd3U0phgQq91KUY2H9KQL8yaJl1pn89e9h6EjrmsLxnhZqzxsXIGsQmoa5ImuIS1F1cZJAWZVpIEEZNJePmGqGBhqI0i3EgxjbkgeCX6Hxt0aWcKp75K2QF1J9eypjlfq20R3U3xyfLo111oVLzaTBOEDRROHE0nOmtgeLX4V_qeoKX1z_nVvAeq0YXralpuD7f3FUmT_A2H0V43pcHh7xZw=w1280"
+                      alt="Company Logo"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* <span className="text-2xl font-bold text-blue-600">Bandy&moot</span> */}
               </div>
             </div>
 
@@ -49,7 +60,7 @@ function Navbar(){
               <button className="text-gray-600 hover:text-blue-600 p-2 rounded-full hover:bg-gray-100 transition-colors">
                 <a href='/Dashboard'><User className="w-5 h-5" /></a>
               </button>
-               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+              <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
                 <a href='/Login'>Log In</a>
               </button>
               <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
@@ -62,25 +73,33 @@ function Navbar(){
 
       {/* MOBILE NAVBAR - Vertical Sidebar Style */}
       <div className="md:hidden">
-        <div className="flex justify-between items-center h-16 px-4 bg-gradient-to-r from-blue-600 to-purple-600">
+        <div className="flex justify-between items-center h-[84px] px-4 bg-white">
           {/* Mobile Logo */}
-          <div className="text-xl font-bold text-white">
+          <div class="flex items-center justify-center">
+                  <div class="h-30 w-50 overflow-hidden">
+                    <img
+                      src="https://lh3.googleusercontent.com/sitesv/AICyYdbpbifTvfn6hvSMd3U0phgQq91KUY2H9KQL8yaJl1pn89e9h6EjrmsLxnhZqzxsXIGsQmoa5ImuIS1F1cZJAWZVpIEEZNJePmGqGBhqI0i3EgxjbkgeCX6Hxt0aWcKp75K2QF1J9eypjlfq20R3U3xyfLo111oVLzaTBOEDRROHE0nOmtgeLX4V_qeoKX1z_nVvAeq0YXralpuD7f3FUmT_A2H0V43pcHh7xZw=w1280"
+                      alt="Company Logo"
+                      class="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+          {/* <div className="text-xl font-bold text-white">
             Bandy&moot
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="text-white hover:text-blue-200 p-2 rounded-md"
+            className=" hover:text-blue-200 p-2 rounded-md"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
         {/* Mobile Slide-in Menu */}
-        <div className={`fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}>
+        <div className={`fixed inset-y-0 left-0 z-50 w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}>
           {/* Mobile Menu Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-4">
             <div className="flex items-center justify-between">

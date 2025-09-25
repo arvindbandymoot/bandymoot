@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Plus, Briefcase, Image, Edit, Trash2, Users, Calendar, MapPin, DollarSign, Upload, X } from 'lucide-react';
-
+const API_URL = 'http://localhost:4000/api/gallery'
 const HRDashboard = () => {
   const [activeTab, setActiveTab] = useState('jobs');
   const [jobs, setJobs] = useState([
@@ -49,15 +50,20 @@ const HRDashboard = () => {
 
   const [galleryForm, setGalleryForm] = useState({
     title: '',
+    discription: '',
+    location: '',
+    date: '',
+    photographer: '',
     category: 'Office',
-    file: null
+    Image: null,
+    thumbnail: null,
   });
 
   const handleJobSubmit = (e) => {
     e.preventDefault();
     if (editingJob) {
-      setJobs(jobs.map(job => 
-        job.id === editingJob.id 
+      setJobs(jobs.map(job =>
+        job.id === editingJob.id
           ? { ...job, ...jobForm, applicants: job.applicants }
           : job
       ));
@@ -82,21 +88,42 @@ const HRDashboard = () => {
     });
     setShowJobForm(false);
   };
+const uploadGallery = async (formData) => {
+  const token = localStorage.getItem("token"); // 👈 token lo localStorage se
+
+  const res = await axios.post(API_URL, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,  // 👈 token sath bhejna
+    },
+  });
+
+  return res.data;
+};
 
   const handleGallerySubmit = (e) => {
+    console.log("Hellow")
     e.preventDefault();
-    if (galleryForm.file) {
-      const newImage = {
-        id: Date.now(),
-        title: galleryForm.title,
-        category: galleryForm.category,
-        url: URL.createObjectURL(galleryForm.file)
-      };
-      setGallery([...gallery, newImage]);
+    if (galleryForm.Image || galleryForm.thumbnail) {
+      const responsedata = uploadGallery(galleryForm)
+      console.log(responsedata)
+      // const newImage = {
+      //   id: Date.now(),
+      //   title: galleryForm.title,
+      //   category: galleryForm.category,
+      //   url: URL.createObjectURL(galleryForm.file)
+      // };
+      // setGallery([...gallery, newImage]);
+      console.log("gallary form", galleryForm)
       setGalleryForm({
         title: '',
+        discription: '',
+        location: '',
+        date: '',
+        photographer: '',
         category: 'Office',
-        file: null
+        image: null,
+        thumnil: null,
       });
       setShowGalleryForm(false);
     }
@@ -141,22 +168,20 @@ const HRDashboard = () => {
           <nav className="-mb-px flex space-x-8">
             <button
               onClick={() => setActiveTab('jobs')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'jobs'
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'jobs'
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+                }`}
             >
               <Briefcase className="w-4 h-4 inline mr-2" />
               Job Postings
             </button>
             <button
               onClick={() => setActiveTab('gallery')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'gallery'
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${activeTab === 'gallery'
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-              }`}
+                }`}
             >
               <Image className="w-4 h-4 inline mr-2" />
               Company Gallery
@@ -202,7 +227,7 @@ const HRDashboard = () => {
                       </button>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex items-center text-sm text-gray-600">
                       <MapPin className="w-4 h-4 mr-2" />
@@ -221,11 +246,10 @@ const HRDashboard = () => {
                       {job.applicants} applicants
                     </div>
                   </div>
-                  
+
                   <div className="mt-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      job.type === 'Full-time' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
-                    }`}>
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${job.type === 'Full-time' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'
+                      }`}>
                       {job.type}
                     </span>
                   </div>
@@ -304,7 +328,7 @@ const HRDashboard = () => {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <form onSubmit={handleJobSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
@@ -312,11 +336,11 @@ const HRDashboard = () => {
                   type="text"
                   required
                   value={jobForm.title}
-                  onChange={(e) => setJobForm({...jobForm, title: e.target.value})}
+                  onChange={(e) => setJobForm({ ...jobForm, title: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
@@ -324,23 +348,23 @@ const HRDashboard = () => {
                     type="text"
                     required
                     value={jobForm.department}
-                    onChange={(e) => setJobForm({...jobForm, department: e.target.value})}
+                    onChange={(e) => setJobForm({ ...jobForm, department: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
                   <input
                     type="text"
                     required
                     value={jobForm.location}
-                    onChange={(e) => setJobForm({...jobForm, location: e.target.value})}
+                    onChange={(e) => setJobForm({ ...jobForm, location: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Salary Range</label>
@@ -348,17 +372,17 @@ const HRDashboard = () => {
                     type="text"
                     required
                     value={jobForm.salary}
-                    onChange={(e) => setJobForm({...jobForm, salary: e.target.value})}
+                    onChange={(e) => setJobForm({ ...jobForm, salary: e.target.value })}
                     placeholder="e.g., ₹8-12 LPA"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Job Type</label>
                   <select
                     value={jobForm.type}
-                    onChange={(e) => setJobForm({...jobForm, type: e.target.value})}
+                    onChange={(e) => setJobForm({ ...jobForm, type: e.target.value })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="Full-time">Full-time</option>
@@ -368,29 +392,29 @@ const HRDashboard = () => {
                   </select>
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Job Description</label>
                 <textarea
                   rows={4}
                   required
                   value={jobForm.description}
-                  onChange={(e) => setJobForm({...jobForm, description: e.target.value})}
+                  onChange={(e) => setJobForm({ ...jobForm, description: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Requirements</label>
                 <textarea
                   rows={3}
                   required
                   value={jobForm.requirements}
-                  onChange={(e) => setJobForm({...jobForm, requirements: e.target.value})}
+                  onChange={(e) => setJobForm({ ...jobForm, requirements: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"
@@ -436,44 +460,68 @@ const HRDashboard = () => {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <form onSubmit={handleGallerySubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image Title</label>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">Title</label> */}
                 <input
                   type="text"
                   required
+                  placeholder='Title'
                   value={galleryForm.title}
-                  onChange={(e) => setGalleryForm({...galleryForm, title: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
+                  className="w-full px-1 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image Title</label>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">Description</label> */}
                 <input
                   type="text"
                   required
-                  value={galleryForm.title}
-                  onChange={(e) => setGalleryForm({...galleryForm, title: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder='Description'
+                  value={galleryForm.discription}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, discription: e.target.value })}
+                  className="w-full px-1 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Image Title</label>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">Location</label> */}
                 <input
                   type="text"
                   required
-                  value={galleryForm.title}
-                  onChange={(e) => setGalleryForm({...galleryForm, title: e.target.value})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder='Location'
+                  value={galleryForm.location}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, location: e.target.value })}
+                  className="w-full px-1 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+              <div>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">Location</label> */}
+                <input
+                  type="text"
+                  required
+                  placeholder='Date'
+                  value={galleryForm.date}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, date: e.target.value })}
+                  className="w-full px-1 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                {/* <label className="block text-sm font-medium text-gray-700 mb-1">Location</label> */}
+                <input
+                  type="text"
+                  required
+                  placeholder='photographer'
+                  value={galleryForm.photographer}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, photographer: e.target.value })}
+                  className="w-full px-1 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
                 <select
                   value={galleryForm.category}
-                  onChange={(e) => setGalleryForm({...galleryForm, category: e.target.value})}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="Office">Office</option>
@@ -482,28 +530,28 @@ const HRDashboard = () => {
                   <option value="Awards">Awards</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Select thumnil Image</label>
                 <input
                   type="file"
                   accept="image/*"
                   required
-                  onChange={(e) => setGalleryForm({...galleryForm, file: e.target.files[0]})}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, thumbnail: e.target.files[0] })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-               <div>
+              <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Select Image</label>
                 <input
                   type="file"
                   accept="image/*"
                   required
-                  onChange={(e) => setGalleryForm({...galleryForm, file: e.target.files[0]})}
+                  onChange={(e) => setGalleryForm({ ...galleryForm, Image: e.target.files[0] })}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              
+
               <div className="flex justify-end space-x-3 pt-4">
                 <button
                   type="button"

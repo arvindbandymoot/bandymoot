@@ -6,16 +6,33 @@ import projectsData from '../data/projectcard';
 import ProjectCard from '../components/HomeComponents/ProjectCard';
 import TestimonialCard from '../components/HomeComponents/ClientCard';
 import testimonialsData from '../data/testimonial';
+import MyVideo from "../data/video1.mp4";
 const Homepage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
 
             {/* Hero Section */}
-            <section id="home" className="pt-16 bg-[url('https://wallpaperbat.com/img/147933208-is-sap-an-erp-system.jpg')] bg-cover bg-center">
-                <div className="max-w-7xl mx-auto px-4 py-20 text-center text-white">
+
+
+            <section id="home" className="relative pt-16 w-full h-screen overflow-hidden">
+            {/* Background Video */}
+            <video
+                    src={MyVideo}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                />
+
+            {/* Optional overlay for darker effect */}
+            <div className="absolute top-0 left-0 w-full h-full bg-black/40 z-10"></div>
+
+            {/* Content */}
+            <div className="relative z-20 max-w-7xl mx-auto px-4 py-20 text-center text-white flex flex-col justify-center h-full">
                     <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
                         Build Something
-                        <span className="block text-yellow-300">Amazing Today</span>
+                        <span className="block opacity-70 text-yellow-300">Amazing Today</span>
                     </h1>
                     <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
                         Transform your ideas into reality with our cutting-edge solutions and expert team.
@@ -32,6 +49,30 @@ const Homepage = () => {
                 </div>
             </section>
 
+
+
+            {/* <section id="home" className="pt-16 bg-[url('https://wallpaperbat.com/img/147933208-is-sap-an-erp-system.jpg')] bg-cover bg-center">
+                <div className="max-w-7xl mx-auto px-4 py-20 text-center text-white">
+                    <h1 className="text-4xl md:text-3xl font-bold mb-6 leading-tight">
+                        Build Something
+                        <span className="block opacity-90 text-white">Amazing Today</span>
+                    </h1>
+                    <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+                        Transform your ideas into reality with our cutting-edge solutions and expert team.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button className="bg-white text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+                            Get Started Free
+                        </button>
+                        <button className="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-blue-600 transition-all duration-300 flex items-center justify-center">
+                            <Play className="w-5 h-5 mr-2" />
+                            Watch Demo
+                        </button>
+                    </div>
+                </div>
+            </section> */}
+
+
             {/* Company Introduction Section */}
             <section id="about" className="py-20">
                 <div className="max-w-7xl mx-auto px-4">
@@ -46,7 +87,7 @@ const Homepage = () => {
                                 technology that drives growth and success.
                             </p>
                             <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                               Empowering businesses with tailored solutions across supply chain, integration, SAP S/4 HANA, custom development, and database management. With expertise in multiple industries, including FMCG, chemical, mining, telecommunication, power, and Automotive, we drive innovation and operational efficiency for our clients
+                                Empowering businesses with tailored solutions across supply chain, integration, SAP S/4 HANA, custom development, and database management. With expertise in multiple industries, including FMCG, chemical, mining, telecommunication, power, and Automotive, we drive innovation and operational efficiency for our clients
                             </p>
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="text-center p-4">
@@ -63,7 +104,7 @@ const Homepage = () => {
                             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
                                 <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
                                 <p className="text-lg opacity-90 mb-6">
-                                    To be a leading name in innovation, recognized for our commitment to excellence and client satisfaction. 
+                                    To be a leading name in innovation, recognized for our commitment to excellence and client satisfaction.
                                 </p>
                                 <div className="flex items-center space-x-4">
                                     <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
@@ -207,7 +248,7 @@ const Homepage = () => {
                             Start Free Trial
                         </button>
                         <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-600 hover:text-white transition-all duration-300">
-                           <a href='/contact'>Contact Sales</a> 
+                            <a href='/contact'>Contact Sales</a>
                         </button>
                     </div>
                 </div>

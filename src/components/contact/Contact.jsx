@@ -93,9 +93,9 @@ export default function CompanyContact() {
                   <div>
                     <h3 className="font-semibold text-gray-900">Business Hours</h3>
                     <p className="text-gray-600 mt-1">
-                      Sunday - Friday: 9:00 AM - 6:00 PM<br />
-                      Saturday: Closed<br />
-                      Sunday: Closed
+                      Sunday - Thursday: 9:00 AM - 6:00 PM<br />
+                      Friday: Closed<br />
+                      SaturDay: Closed
                     </p>
                   </div>
                 </div>
